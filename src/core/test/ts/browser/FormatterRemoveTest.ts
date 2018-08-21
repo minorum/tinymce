@@ -369,6 +369,15 @@ UnitTest.asynctest('browser.tinymce.core.FormatterRemoveTest', function () {
     LegacyUnit.equal(editor.getContent(editor), '<p>abc</p><p>def</p><p contenteditable="false"><b>ghj</b></p>', 'Text in first paragraph is not bold');
   });
 
+  suite.test('contentEditable: true on start and contentEditable: false on end with wrap enabled', function (editor) {
+    editor.formatter.register('format', { inline: 'b' });
+    editor.settings.wrap_noneditables_with_style = true;
+    editor.setContent('<p>abc</p><p><b>def</b></p><p contenteditable="false"><b>ghj</b></p>');
+    LegacyUnit.setSelection(editor, 'p:nth-child(2) b', 0, 'p:last b', 3);
+    editor.formatter.remove('format');
+    LegacyUnit.equal(editor.getContent(editor), '<p>abc</p><p>def</p><p contenteditable="false">ghj</p>', 'Both paragraphs are not bold');
+  });
+
   suite.test('contentEditable: true inside contentEditable: false', function (editor) {
     editor.formatter.register('format', { inline: 'b' });
     editor.setContent('<p>abc</p><p contenteditable="false"><span contenteditable="true"><b>def</b></span></p>');
