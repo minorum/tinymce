@@ -376,7 +376,7 @@ const remove = function (ed: Editor, name: string, vars?, node?, similar?) {
     children = Tools.grep(node.childNodes);
 
     // Process current node
-    if (contentEditable && !hasContentEditableState) {
+    if ((contentEditable && !hasContentEditableState) || ed.settings.wrap_noneditables_with_style) {
       for (i = 0, l = formatList.length; i < l; i++) {
         if (removeFormat(ed, formatList[i], vars, node, node)) {
           break;
@@ -512,7 +512,7 @@ const remove = function (ed: Editor, name: string, vars?, node?, similar?) {
     return;
   }
 
-  if (dom.getContentEditable(selection.getNode()) === 'false') {
+  if (dom.getContentEditable(selection.getNode()) === 'false' && !ed.settings.wrap_noneditables_with_style) {
     node = selection.getNode();
     for (let i = 0, l = formatList.length; i < l; i++) {
       if (formatList[i].ceFalseOverride) {

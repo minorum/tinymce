@@ -94,7 +94,8 @@ const getDefaultSettings = function (id, documentBaseUrl, editor) {
     entity_encoding: 'named',
     url_converter: editor.convertURL,
     url_converter_scope: editor,
-    ie7_compat: true
+    ie7_compat: true,
+    wrap_noneditables_with_style: false
   };
 };
 
